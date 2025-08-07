@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="موقع رسمي لولاية أبيا النيجيرية - معلومات عن الولاية، معالم سياحية، مطاعم وفنادق">
+    <title>ولاية أبيا - الصفحة الرئيسية</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #1a5fb4;
+            --secondary: #e95420;
+            --accent: #0e8420;
+            --light: #f6f5f7;
+            --dark: #2c2c2c;
+            --gradient-primary: linear-gradient(135deg, var(--primary), #0d4a9c);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), #d24315);
+            --gradient-accent: linear-gradient(135deg, var(--accent), #1a9c2d);
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            height: 120px;
+            text-align: center;
+            border-bottom: solid var(--accent) 3px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .h11 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .h11 h1 {
+            margin-top: 10px;
+            color: white;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .logokano {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: white;
+        }
+        
+        .divbutton {
+            width: 100%;
+            height: 80px;
+            border-bottom: solid var(--accent) 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background-color: white;
+        }
+        
+        button {
+            width: 30%;
+            max-width: 200px;
+            height: 50px;
+            color: var(--light);
+            font-size: 1.2rem;
+            background: var(--gradient-secondary);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        main {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        p {
+            margin: 15px 0;
+            text-align: right;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .info-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .ab {
+            text-align: center;
+            margin: 30px auto;
+            max-width: 500px;
+        }
+        
+        .alix {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            border: 3px solid var(--primary);
+        }
+        
+        .aba {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .map-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .mapkano {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            border: 2px solid var(--accent);
+        }
+        
+        .mapp {
+            text-align: center;
+            color: var(--secondary);
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                height: 150px;
+            }
+            
+            .h11 h1 {
+                font-size: 1.5rem;
+            }
+            
+            .divbutton {
+                height: auto;
+                padding: 15px;
+                flex-wrap: wrap;
+                
+            }
+            
+            button {
+                width: 120px;
+                
+                padding-right: 10px;
+                font-size: 1rem;
+                height: 45px;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body> 
+    <header>
+        <div class="h11">
+            <img class="logokano" src="logoabia.jpg" alt="شعار ولاية أبيا">
+            <h1>ولاية أبيا النيجيرية</h1>
+        </div>
+    </header>
+    
+    <div class="divbutton">
+        <a href="restaurants.html"><button>مطاعم</button></a>
+        <a href="tourism.html"><button>معالم سياحية</button></a>
+        <a href="hotels.html"><button>فنادق</button></a>
+    </div>
+    
+    <main>
+        <div class="info-box">
+            <p>
+                ولاية أبيا هي إحدى ولايات نيجيريا، وتقع في المنطقة الجنوبية الشرقية من البلاد. عاصمتها هي أوماهيا، وأكبر مدنها هي أبا. ولاية أبيا تعتبر واحدة من أكثر الولايات كثافة سكانية في نيجيريا، وهي معروفة بثقافتها الغنية وتنوعها العرقي. تشتهر الولاية بالزراعة، خاصة زراعة الكاكاو والزيت النباتي، بالإضافة إلى الصناعات الخفيفة. أبيا تُعرف أيضًا بأسواقها التقليدية النابضة بالحياة وبالأحداث الثقافية المتنوعة.
+            </p>
+            
+            <p><strong>تاريخ التأسيس:</strong> 27 أغسطس 1991</p>
+            <p><strong>عدد السكان:</strong> 2.8 مليون نسمة تقريباً</p>
+            <p><strong>المساحة:</strong> 6,320 كيلومتر مربع</p>
+        </div>
+        
+        <div class="ab">
+            <img class="alix" src="alix.jpg" alt="حاكم ولاية أبيا - اليكس أوتي">
+            <p class="aba">حاكم ولاية أبيا: اليكس أوتي</p>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="map-container">
+            <img class="mapkano" src="mapabia.jpg" alt="خريطة توضح موقع ولاية أبيا في نيجيريا">
+            <p class="mapp">موقع ولاية أبيا على خريطة نيجيريا</p>
+        </div>
+        <p>© 2023 جميع الحقوق محفوظة - ولاية أبيا</p>
+    </footer>
+</body>
+</html>

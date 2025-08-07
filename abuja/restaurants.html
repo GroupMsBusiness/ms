@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل مطاعم ابوجا</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* تنسيقات عامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* الهيدر */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        header h1 {
+            color: #e74c3c;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        header i {
+            margin-left: 10px;
+        }
+        
+        /* فلترة المطاعم */
+        .filters {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 2;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        #search-input, select {
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        select {
+            padding-left: 15px;
+        }
+        
+        #search-input:focus, select:focus {
+            border-color: #e74c3c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+        
+        /* قائمة المطاعم */
+        .restaurants-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .restaurant-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .restaurant-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .restaurant-info {
+            padding: 20px;
+        }
+        
+        .restaurant-info h3 {
+            color: #e74c3c;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .restaurant-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .rating {
+            background-color: #f39c12;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .rating i {
+            margin-left: 5px;
+        }
+        
+        .cuisine-type {
+            background-color: #9b59b6;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            color: #555;
+        }
+        
+        .location i {
+            margin-left: 5px;
+            color: #3498db;
+        }
+        
+        .restaurant-info p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .restaurant-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .view-btn, .map-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .view-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .view-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .map-btn {
+            background-color: #34a853;
+            color: white;
+        }
+        
+        .map-btn:hover {
+            background-color: #2d9248;
+        }
+        
+        .view-btn i, .map-btn i {
+            margin-left: 5px;
+        }
+        
+        /* رسالة عدم وجود نتائج */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        /* تنسيقات للهواتف */
+        @media (max-width: 768px) {
+            .restaurants-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .restaurant-links {
+                flex-direction: column;
+            }
+            
+            .view-btn, .map-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-utensils"></i>دليل مطاعم ابوجا</h1>
+            <p>اكتشف أفضل المطاعم في عاصمة ابوجا، نيجيريا</p>
+        </header>
+        
+        <div class="filters">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="ابحث عن مطعم...">
+            </div>
+        </div>
+        
+        <div class="restaurants-list">
+            <!-- مطعم 1 -->
+            <div class="restaurant-card">
+                <img src="imges/jivenik.jpg" alt="jevinik restaurant " class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Jevinik Restaurant </h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.0</span>
+                        <span class="cuisine-type">عربي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>ابا</span>
+                    </div>
+                    
+                    <p> يقدم المطعم اكلات افريقيا و محلية و يوفر خدمة توصيل</p>
+                    <div class="restaurant-links">
+                        <a href="https://jevinik.com" class="view-btn">الموقع الرسمي <i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://maps.app.goo.gl/YvJShcPbpk4TXcNp9?g_st=ic" target="_blank" class="map-btn">عرض الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مطعم 2 -->
+            <div class="restaurant-card">
+                <img src="imges/roots.jpg" alt="Chicken Republic" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Roots Restaurant & Cafe</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.8</span>
+                        <span class="cuisine-type">وجبات سريعة</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>اومواهيا</span>
+                    </div>
+                    
+                    
+                    <div class="restaurant-links">
+                        <a href="https://www.rootsng.com" target="_blank" class="view-btn">الموقع الرسمي <i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://g.co/kgs/4L4YGHu" target="_blank" class="map-btn">عرض الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مطعم 3 -->
+            <div class="restaurant-card">
+                <img src="imges/crunchies.jpg" alt="crunchies" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Crunchies Fried Chicken</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>3.9</span>
+                        <span class="cuisine-type">وجبات سريعة</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>ابا</span>
+                    </div>
+                    <p>مطعم يقدم اكلات سريعة مع خدمة التوصيل</p>
+                    
+                    <div class="restaurant-links">
+                        <a href="https://www.crunchiesonline.com/" class="view-btn">الموقع الرسمي <i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://maps.app.goo.gl/QocW2cU9awxaAUBP6?g_st=ic" target="_blank" class="map-btn">عرض الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مطعم 4 -->
+            <div class="restaurant-card">
+                <img src="imges/de.jpg" alt="de Native Restaurant" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>De Native Restaurant</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>3.7</span>
+                        <span class="cuisine-type">ماكولات نيجيرية</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>اومواهيا</span>
+                    </div>
+                    <p>يقدم اكلات نيجيرية مع خدمة التوصيل يعتبر خيار اقتصادي</p>
+                    
+                    <div class="restaurant-links">
+                        <a href="https://maps.app.goo.gl/wMCVdmb8TnSfLtUy6?g_st=ic" target="_blank" class="map-btn">عرض الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مطعم 5 -->
+            <div class="restaurant-card">
+                <img src="imges/jovit.jpg" alt="jovit" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Jovit restaurant</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.1</span>
+                        <span class="cuisine-type">ماكولات سريعة</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>اومواهيا</span>
+                    </div>
+                    <p>مطعم ماكولات سريعة يوفر خدمة توصيل مع drive-thru</p>
+                    <div class="restaurant-links">
+                        <a href="https://maps.app.goo.gl/xQRV2UBs6BW6rML29?g_st=ic" target="_blank" class="map-btn">عرض الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // وظيفة البحث للمطاعم
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const restaurantCards = document.querySelectorAll('.restaurant-card');
+            
+            // إنشاء رسالة عدم وجود نتائج
+            const noResultsMsg = document.createElement('div');
+            noResultsMsg.className = 'no-results';
+            noResultsMsg.innerHTML = `
+                <i class="fas fa-utensils"></i>
+                <h3>لا توجد مطاعم مطابقة لبحثك</h3>
+                <p>حاول استخدام كلمات بحث مختلفة</p>
+            `;
+            document.querySelector('.restaurants-list').appendChild(noResultsMsg);
+            
+            // دالة تنفيذ البحث
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let hasResults = false;
+                
+                restaurantCards.forEach(card => {
+                    const restaurantName = card.querySelector('h3').textContent.toLowerCase();
+                    const restaurantDesc = card.querySelectorAll('p')[1].textContent.toLowerCase();
+                    const restaurantLocation = card.querySelectorAll('p')[0].textContent.toLowerCase();
+                    
+                    if (restaurantName.includes(searchTerm) || 
+                        restaurantDesc.includes(searchTerm) ||
+                        restaurantLocation.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        hasResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // عرض/إخفاء رسالة عدم وجود نتائج
+                noResultsMsg.style.display = hasResults ? 'none' : 'block';
+            }
+            
+            // إضافة مستمع حدث لحقل البحث
+            searchInput.addEventListener('input', performSearch);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السياحة في أبيا - نيجيريا</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* التنسيقات العامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* رأس الصفحة */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header i {
+            margin-left: 10px;
+        }
+        
+        /* فلترة الأماكن */
+        .filters {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 2;
+            min-width: 250px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        #search-input, select {
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        select {
+            padding-left: 15px;
+        }
+        
+        #search-input:focus, select:focus {
+            border-color: #27ae60;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+        
+        /* قائمة الأماكن السياحية */
+        .attractions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .attraction-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .attraction-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .attraction-info {
+            padding: 20px;
+        }
+        
+        .attraction-info h3 {
+            color: #27ae60;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .attraction-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .type {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .location i {
+            margin-left: 5px;
+            color: #e74c3c;
+        }
+        
+        .attraction-info p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .attraction-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .feature {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature i {
+            margin-left: 5px;
+            color: #3498db;
+            font-size: 0.7rem;
+        }
+        
+        .attraction-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .details-btn, .website-btn, .map-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+        
+        .details-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .details-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .website-btn {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .website-btn:hover {
+            background-color: #8e44ad;
+        }
+        
+        .map-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .map-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .details-btn i, .website-btn i, .map-btn i {
+            margin-left: 5px;
+        }
+        
+        /* رسالة عدم وجود نتائج */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* تنسيقات للهواتف */
+        @media (max-width: 768px) {
+            .attractions-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .attraction-image {
+                height: 180px;
+            }
+            
+            .attraction-links {
+                flex-direction: column;
+            }
+            
+            .details-btn, .website-btn, .map-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-map-marked-alt"></i> الأماكن السياحية في أبيا</h1>
+            <p>اكتشف أجمل المعالم السياحية في ولاية أبيا، نيجيريا. تتمتع أبيا بالعديد من المعالم الطبيعية والثقافية والتاريخية التي تستحق الزيارة.</p>
+        </header>
+        
+        <div class="filters">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="ابحث عن مكان سياحي...">
+            </div>
+            <select id="area-filter">
+                <option value="">كل المناطق</option>
+                <option value="أوماهيا">أوماهيا</option>
+                <option value="أبا">أبا</option>
+                <option value="أروشوكو">أروشوكو</option>
+                <option value="أوهيفيا">أوهيفيا</option>
+                <option value="أوبينغوا">أوبينغوا</option>
+            </select>
+            <select id="type-filter">
+                <option value="">كل الأنواع</option>
+                <option value="طبيعي">طبيعي</option>
+                <option value="ثقافي">ثقافي</option>
+                <option value="تاريخي">تاريخي</option>
+                <option value="ترفيهي">ترفيهي</option>
+            </select>
+        </div>
+        
+        <div class="attractions-list">
+            <!-- مكان سياحي 1 -->
+            <div class="attraction-card">
+                <img src="imges/museum.webp" alt="متحف حربي" class="attraction-image">
+                <div class="attraction-info">
+                    <h3>national war museum</h3>
+                    <div class="attraction-meta">
+                        <span class="type">متحف</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>أوماهيا</span>
+                    </div>
+                    <p>⁧يعرض المتحف التاريخ العسكري لنيجيريا⁩⁧، بالإضافة إلى آثار من الحرب الأهلية البيافرية النيجيرية . يضم المتحف مجموعة من الدبابات والمركبات المدرعة والسفن والطائرات،</p>
+                    <div class="attraction-features">
+                        <span class="feature"><i class="fas fa-hiking"></i>مسارات مشي</span>
+                        <span class="feature"><i class="fas fa-camera"></i>مناظر طبيعية</span>
+                        <span class="feature"><i class="fas fa-binoculars"></i>مراقبة الطيور</span>
+                    </div>
+                    <div class="attraction-links">
+                        <a href="#" class="details-btn">التفاصيل <i class="fas fa-info-circle"></i></a>
+                        <a href="https://www.abiationalpark.com" target="_blank" class="website-btn">الموقع <i class="fas fa-globe"></i></a>
+                        <a href="https://maps.google.com/maps?hl=ar&gl=sa&um=1&ie=UTF-8&fb=1&sa=X&ftid=0x1042dce344961d0d:0x69ee52ef060dd92c" target="_blank" class="map-btn">الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مكان سياحي 2 -->
+            <div class="attraction-card">
+                <img src="https://images.unsplash.com/photo-1470004914212-05527e49370b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="متحف أبيا الثقافي" class="attraction-image">
+                <div class="attraction-info">
+                    <h3>متحف أبيا الثقافي</h3>
+                    <div class="attraction-meta">
+                        <span class="type">ثقافي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>أبا</span>
+                    </div>
+                    <p>متحف يعرض التراث الثقافي الغني لولاية أبيا، يحتوي على قطع أثرية وتقليدية تعود لمئات السنين.</p>
+                    <div class="attraction-features">
+                        <span class="feature"><i class="fas fa-landmark"></i>قطع أثرية</span>
+                        <span class="feature"><i class="fas fa-book"></i>مركز ثقافي</span>
+                        <span class="feature"><i class="fas fa-gift"></i>متجر هدايا</span>
+                    </div>
+                    <div class="attraction-links">
+                        <a href="#" class="details-btn">التفاصيل <i class="fas fa-info-circle"></i></a>
+                        <a href="https://www.abiaculturalmuseum.com" target="_blank" class="website-btn">الموقع <i class="fas fa-globe"></i></a>
+                        <a href="https://goo.gl/maps/abc456" target="_blank" class="map-btn">الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مكان سياحي 3 -->
+            <div class="attraction-card">
+                <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="شلالات أوغو" class="attraction-image">
+                <div class="attraction-info">
+                    <h3>شلالات أوغو</h3>
+                    <div class="attraction-meta">
+                        <span class="type">طبيعي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>أروشوكو</span>
+                    </div>
+                    <p>شلالات خلابة يصل ارتفاعها إلى 30 متراً، محاطة بغابة استوائية جميلة، مكان مثالي للاسترخاء والاستجمام.</p>
+                    <div class="attraction-features">
+                        <span class="feature"><i class="fas fa-water"></i>شلالات</span>
+                        <span class="feature"><i class="fas fa-swimming-pool"></i>مسابح طبيعية</span>
+                        <span class="feature"><i class="fas fa-camera"></i>مناظر خلابة</span>
+                    </div>
+                    <div class="attraction-links">
+                        <a href="#" class="details-btn">التفاصيل <i class="fas fa-info-circle"></i></a>
+                        <a href="https://www.uguwfalls.com" target="_blank" class="website-btn">الموقع <i class="fas fa-globe"></i></a>
+                        <a href="https://goo.gl/maps/def789" target="_blank" class="map-btn">الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مكان سياحي 4 -->
+            <div class="attraction-card">
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="قرية أبيا التراثية" class="attraction-image">
+                <div class="attraction-info">
+                    <h3>قرية أبيا التراثية</h3>
+                    <div class="attraction-meta">
+                        <span class="type">ثقافي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>أوهيفيا</span>
+                    </div>
+                    <p>قرية تراثية تعرض نمط الحياة التقليدية لسكان أبيا، مع عروض حية للحرف اليدوية والموسيقى والرقصات الشعبية.</p>
+                    <div class="attraction-features">
+                        <span class="feature"><i class="fas fa-home"></i>منازل تقليدية</span>
+                        <span class="feature"><i class="fas fa-music"></i>عروض فولكلورية</span>
+                        <span class="feature"><i class="fas fa-utensils"></i>مأكولات تقليدية</span>
+                    </div>
+                    <div class="attraction-links">
+                        <a href="#" class="details-btn">التفاصيل <i class="fas fa-info-circle"></i></a>
+                        <a href="https://www.abiaheritagevillage.com" target="_blank" class="website-btn">الموقع <i class="fas fa-globe"></i></a>
+                        <a href="https://goo.gl/maps/ghi012" target="_blank" class="map-btn">الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مكان سياحي 5 -->
+            <div class="attraction-card">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="بحيرة نينيوي" class="attraction-image">
+                <div class="attraction-info">
+                    <h3>بحيرة نينيوي</h3>
+                    <div class="attraction-meta">
+                        <span class="type">طبيعي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>أوبينغوا</span>
+                    </div>
+                    <p>بحيرة ساحرة محاطة بالتلال الخضراء، توفر فرصاً ممتازة لصيد الأسماك، ركوب القوارب والاستمتاع بالهدوء.</p>
+                    <div class="attraction-features">
+                        <span class="feature"><i class="fas fa-water"></i>بحيرة</span>
+                        <span class="feature"><i class="fas fa-fish"></i>صيد السمك</span>
+                        <span class="feature"><i class="fas fa-ship"></i>رحلات بالقوارب</span>
+                    </div>
+                    <div class="attraction-links">
+                        <a href="#" class="details-btn">التفاصيل <i class="fas fa-info-circle"></i></a>
+                        <a href="https://www.niniwelake.com" target="_blank" class="website-btn">الموقع <i class="fas fa-globe"></i></a>
+                        <a href="https://goo.gl/maps/jkl345" target="_blank" class="map-btn">الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- مكان سياحي 6 -->
+            <div class="attraction-card">
+                <img src="https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="منتزه أبيا الترفيهي" class="attraction-image">
+                <div class="attraction-info">
+                    <h3>منتزه أبيا الترفيهي</h3>
+                    <div class="attraction-meta">
+                        <span class="type">ترفيهي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>أوماهيا</span>
+                    </div>
+                    <p>منتزه ترفيهي حديث يضم العديد من الألعاب والأنشطة المناسبة لجميع أفراد العائلة، مع مطاعم وحدائق جميلة.</p>
+                    <div class="attraction-features">
+                        <span class="feature"><i class="fas fa-gamepad"></i>ألعاب ترفيهية</span>
+                        <span class="feature"><i class="fas fa-utensils"></i>مطاعم</span>
+                        <span class="feature"><i class="fas fa-child"></i>منطقة أطفال</span>
+                    </div>
+                    <div class="attraction-links">
+                        <a href="#" class="details-btn">التفاصيل <i class="fas fa-info-circle"></i></a>
+                        <a href="https://www.abiaamusementpark.com" target="_blank" class="website-btn">الموقع <i class="fas fa-globe"></i></a>
+                        <a href="https://goo.gl/maps/mno678" target="_blank" class="map-btn">الخريطة <i class="fas fa-map-marked-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>جميع الحقوق محفوظة &copy; 2023 دليل السياحة في أبيا</p>
+            <p>للاستفسارات: info@abiatourism.com | هاتف: +234 123 456 789</p>
+            <div style="margin-top: 15px;">
+                <a href="#" style="color: #3498db; margin: 0 10px;"><i class="fab fa-facebook"></i></a>
+                <a href="#" style="color: #1da1f2; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: #e1306c; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // وظيفة البحث للأماكن السياحية
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const areaFilter = document.getElementById('area-filter');
+            const typeFilter = document.getElementById('type-filter');
+            const attractionCards = document.querySelectorAll('.attraction-card');
+            
+            // إنشاء رسالة عدم وجود نتائج
+            const noResultsMsg = document.createElement('div');
+            noResultsMsg.className = 'no-results';
+            noResultsMsg.innerHTML = `
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>لا توجد أماكن سياحية مطابقة لبحثك</h3>
+                <p>حاول تعديل كلمات البحث أو خيارات التصفية</p>
+            `;
+            document.querySelector('.attractions-list').appendChild(noResultsMsg);
+            
+            // دالة تنفيذ البحث والتصفية
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const areaValue = areaFilter.value;
+                const typeValue = typeFilter.value;
+                let hasResults = false;
+                
+                attractionCards.forEach(card => {
+                    const attractionName = card.querySelector('h3').textContent.toLowerCase();
+                    const attractionDesc = card.querySelector('p').textContent.toLowerCase();
+                    const attractionArea = card.querySelector('.location').textContent;
+                    const attractionType = card.querySelector('.type').textContent;
+                    
+                    // تطبيق شروط البحث والتصفية
+                    const nameMatch = attractionName.includes(searchTerm) || attractionDesc.includes(searchTerm);
+                    const areaMatch = areaValue === '' || attractionArea.includes(areaValue);
+                    const typeMatch = typeValue === '' || attractionType === typeValue;
+                    
+                    if (nameMatch && areaMatch && typeMatch) {
+                        card.style.display = 'block';
+                        hasResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // عرض/إخفاء رسالة عدم وجود نتائج
+                noResultsMsg.style.display = hasResults ? 'none' : 'block';
+            }
+            
+            // إضافة مستمعي الأحداث لعناصر البحث والتصفية
+            searchInput.addEventListener('input', performSearch);
+            areaFilter.addEventListener('change', performSearch);
+            typeFilter.addEventListener('change', performSearch);
+        });
+    </script>
+</body>
+</html>

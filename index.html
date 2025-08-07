@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل ولايات نيجيريا</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* التنسيقات العامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* رأس الصفحة */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+        
+        .header-text {
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* فلترة الولايات */
+        .filters {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        #search-input {
+            padding: 12px 45px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            width: 100%;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        #search-input:focus {
+            border-color: #2a5298;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+        
+        /* قائمة الولايات */
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .state-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none;
+        }
+        
+        .state-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .state-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .state-card:hover .state-image {
+            transform: scale(1.05);
+        }
+        
+        .state-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .state-info h3 {
+            color: #2a5298;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .state-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .state-card:hover .state-overlay {
+            opacity: 1;
+        }
+        
+        .state-overlay h3 {
+            color: white;
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: #2a5298;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #e74c3c;
+        }
+        
+        /* تنسيقات للهواتف */
+        @media (max-width: 768px) {
+            .states-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .states-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="nigeria.png" alt="شعار نيجيريا" class="logo">
+                <div class="header-text">
+                    <h1><i class="fas fa-map-marked-alt"></i> دليل ولايات نيجيريا</h1>
+                    <p>استكشف جميع ولايات نيجيريا والمناطق الفيدرالية</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="filters">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="ابحث عن ولاية...">
+            </div>
+        </div>
+        
+        <div class="states-grid" id="states-container">
+            <!-- ولاية أبيا -->
+            <a href="state1/abia/abia.html" class="state-card" data-state="ابيا">
+                <img src="state/abia.jpg" alt="ولاية أبيا" class="state-image">
+                <div class="state-overlay">
+                    <h3>أبيا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>أبيا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية أبوجا -->
+            <a href="state1/abuja/abuja.html" class="state-card" data-state="ابوجا">
+                <img src="state/abuja.JPG" alt="أبوجا" class="state-image">
+                <div class="state-overlay">
+                    <h3>أبوجا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>أبوجا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كانو -->
+            <a href="state1/kano/kano.html" class="state-card" data-state="كانو">
+                <img src="state/kano.JPG" alt="كانو" class="state-image">
+                <div class="state-overlay">
+                    <h3>كانو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كانو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية لاغوس -->
+            <a href="state1/lagos/lagos.html" class="state-card" data-state="لاغوس">
+                <img src="state/lagos.jpg" alt="لاغوس" class="state-image">
+                <div class="state-overlay">
+                    <h3>لاغوس</h3>
+                </div>
+                <div class="state-info">
+                    <h3>لاغوس</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية أداماوا -->
+            <a href="state1/adamawa/adamawa.html" class="state-card" data-state="اداماوا">
+                <img src="state/adamawa.jpg" alt="أداماوا" class="state-image">
+                <div class="state-overlay">
+                    <h3>أداماوا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>أداماوا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية أنمبرة -->
+            <a href="state1/anambra/anambra.html" class="state-card" data-state="انمبرة">
+                <img src="state/anambra.jpg" alt="أنمبرة" class="state-image">
+                <div class="state-overlay">
+                    <h3>أنمبرة</h3>
+                </div>
+                <div class="state-info">
+                    <h3>أنمبرة</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية باوتشي -->
+            <a href="state1/bauchi/bauchi.html" class="state-card" data-state="باوتشي">
+                <img src="state/bauchi.jpg" alt="باوتشي" class="state-image">
+                <div class="state-overlay">
+                    <h3>باوتشي</h3>
+                </div>
+                <div class="state-info">
+                    <h3>باوتشي</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية بايلسا -->
+            <a href="state1/bayelsa/bayelsa.html" class="state-card" data-state="بايلسا">
+                <img src="state/bayelsa.jpg" alt="بايلسا" class="state-image">
+                <div class="state-overlay">
+                    <h3>بايلسا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>بايلسا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية بينو -->
+            <a href="state1/benue/benue.html" class="state-card" data-state="بينو">
+                <img src="state/benue.jpg" alt="بينو" class="state-image">
+                <div class="state-overlay">
+                    <h3>بينو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>بينو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية برنو -->
+            <a href="state1/borno/borno.html" class="state-card" data-state="برنو">
+                <img src="state/borno.jpg" alt="برنو" class="state-image">
+                <div class="state-overlay">
+                    <h3>برنو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>برنو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كروس ريفر -->
+            <a href="state1/crossriver/crossriver.html" class="state-card" data-state="كروس ريفر">
+                <img src="state/crossriver.jpg" alt="كروس ريفر" class="state-image">
+                <div class="state-overlay">
+                    <h3>كروس ريفر</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كروس ريفر</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية دلتا -->
+            <a href="state1/delta/delta.html" class="state-card" data-state="دلتا">
+                <img src="state/delta.jpg" alt="دلتا" class="state-image">
+                <div class="state-overlay">
+                    <h3>دلتا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>دلتا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية ايبوني -->
+            <a href="state1/ebonyi/ebonyi.html" class="state-card" data-state="ايبوني">
+                <img src="state/ebonyi.jpg" alt="ايبوني" class="state-image">
+                <div class="state-overlay">
+                    <h3>ايبوني</h3>
+                </div>
+                <div class="state-info">
+                    <h3>ايبوني</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية ايدو -->
+            <a href="state1/edo/edo.html" class="state-card" data-state="ايدو">
+                <img src="state/edo.jpg" alt="ايدو" class="state-image">
+                <div class="state-overlay">
+                    <h3>ايدو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>ايدو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية اكيتي -->
+            <a href="state1/ekiti/ekiti.html" class="state-card" data-state="اكيتي">
+                <img src="state/ekiti.jpg" alt="اكيتي" class="state-image">
+                <div class="state-overlay">
+                    <h3>اكيتي</h3>
+                </div>
+                <div class="state-info">
+                    <h3>اكيتي</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية اينوغو -->
+            <a href="state1/enugu/enugu.html" class="state-card" data-state="اينوغو">
+                <img src="state/enugu.jpg" alt="اينوغو" class="state-image">
+                <div class="state-overlay">
+                    <h3>اينوغو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>اينوغو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية غومبي -->
+            <a href="state1/gombe/gombe.html" class="state-card" data-state="غومبي">
+                <img src="state/gombe.jpg" alt="غومبي" class="state-image">
+                <div class="state-overlay">
+                    <h3>غومبي</h3>
+                </div>
+                <div class="state-info">
+                    <h3>غومبي</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية ايمو -->
+            <a href="state1/imo/imo.html" class="state-card" data-state="ايمو">
+                <img src="state/imo.jpg" alt="ايمو" class="state-image">
+                <div class="state-overlay">
+                    <h3>ايمو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>ايمو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية جيغاوا -->
+            <a href="state1/jigawa/jigawa.html" class="state-card" data-state="جيغاوا">
+                <img src="state/jigawa.jpg" alt="جيغاوا" class="state-image">
+                <div class="state-overlay">
+                    <h3>جيغاوا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>جيغاوا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كادونا -->
+            <a href="state1/kaduna/kaduna.html" class="state-card" data-state="كادونا">
+                <img src="state/kaduna.jpg" alt="كادونا" class="state-image">
+                <div class="state-overlay">
+                    <h3>كادونا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كادونا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كاتسينا -->
+            <a href="state1/katsina/katsina.html" class="state-card" data-state="كاتسينا">
+                <img src="state/katsina.jpg" alt="كاتسينا" class="state-image">
+                <div class="state-overlay">
+                    <h3>كاتسينا</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كاتسينا</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كبي -->
+            <a href="state1/kebbi/kebbi.html" class="state-card" data-state="كبي">
+                <img src="state/kebbi.jpg" alt="كبي" class="state-image">
+                <div class="state-overlay">
+                    <h3>كبي</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كبي</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كوجي -->
+            <a href="state1/kogi/kogi.html" class="state-card" data-state="كوجي">
+                <img src="state/kogi.jpg" alt="كوجي" class="state-image">
+                <div class="state-overlay">
+                    <h3>كوجي</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كوجي</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية كوارة -->
+            <a href="state1/kwara/kwara.html" class="state-card" data-state="كوارة">
+                <img src="state/kwara.jpg" alt="كوارة" class="state-image">
+                <div class="state-overlay">
+                    <h3>كوارة</h3>
+                </div>
+                <div class="state-info">
+                    <h3>كوارة</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية نصراوة -->
+            <a href="state1/nasarawa/nasarawa.html" class="state-card" data-state="نصراوة">
+                <img src="state/nasarawa.jpg" alt="نصراوة" class="state-image">
+                <div class="state-overlay">
+                    <h3>نصراوة</h3>
+                </div>
+                <div class="state-info">
+                    <h3>نصراوة</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية نيجر -->
+            <a href="state1/niger/niger.html" class="state-card" data-state="نيجر">
+                <img src="state/niger.jpg" alt="نيجر" class="state-image">
+                <div class="state-overlay">
+                    <h3>نيجر</h3>
+                </div>
+                <div class="state-info">
+                    <h3>نيجر</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية اوغون -->
+            <a href="state1/ogun/ogun.html" class="state-card" data-state="اوغون">
+                <img src="state/ogun.jpg" alt="اوغون" class="state-image">
+                <div class="state-overlay">
+                    <h3>اوغون</h3>
+                </div>
+                <div class="state-info">
+                    <h3>اوغون</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية اوندو -->
+            <a href="state1/ondo/ondu.html" class="state-card" data-state="اوندو">
+                <img src="state/ondo.jpg" alt="اوندو" class="state-image">
+                <div class="state-overlay">
+                    <h3>اوندو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>اوندو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية اوشون -->
+            <a href="state1/osun/osun.html" class="state-card" data-state="اوشون">
+                <img src="state/osun.jpg" alt="اوشون" class="state-image">
+                <div class="state-overlay">
+                    <h3>اوشون</h3>
+                </div>
+                <div class="state-info">
+                    <h3>اوشون</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية اويو -->
+            <a href="state1/oyo/oyo.html" class="state-card" data-state="اويو">
+                <img src="state/oyo.jpg" alt="اويو" class="state-image">
+                <div class="state-overlay">
+                    <h3>اويو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>اويو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية بلاتو -->
+            <a href="state1/plateau/plateau.html" class="state-card" data-state="بلاتو">
+                <img src="state/plateau.jpg" alt="بلاتو" class="state-image">
+                <div class="state-overlay">
+                    <h3>بلاتو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>بلاتو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية ريفرز -->
+            <a href="state1/rivers/rivers.html" class="state-card" data-state="ريفرز">
+                <img src="state/rivers.jpg" alt="ريفرز" class="state-image">
+                <div class="state-overlay">
+                    <h3>ريفرز</h3>
+                </div>
+                <div class="state-info">
+                    <h3>ريفرز</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية صكتو -->
+            <a href="state1/sokoto/sokoto.html" class="state-card" data-state="صكتو">
+                <img src="state/sakoto.jpg" alt="صكتو" class="state-image">
+                <div class="state-overlay">
+                    <h3>صكتو</h3>
+                </div>
+                <div class="state-info">
+                    <h3>صكتو</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية ترابة -->
+            <a href="state1/taraba/taraba.html" class="state-card" data-state="ترابة">
+                <img src="state/taraba.jpg" alt="ترابة" class="state-image">
+                <div class="state-overlay">
+                    <h3>ترابة</h3>
+                </div>
+                <div class="state-info">
+                    <h3>ترابة</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية يوبي -->
+            <a href="state1/yobe/yobe.html" class="state-card" data-state="يوبي">
+                <img src="state/yobe.jpg" alt="يوبي" class="state-image">
+                <div class="state-overlay">
+                    <h3>يوبي</h3>
+                </div>
+                <div class="state-info">
+                    <h3>يوبي</h3>
+                </div>
+            </a>
+            
+            <!-- ولاية زامفارة -->
+            <a href="state1/zamfara/zamfara.html" class="state-card" data-state="زامفارة">
+                <img src="state/zamfara.jpg" alt="زامفارة" class="state-image">
+                <div class="state-overlay">
+                    <h3>زامفارة</h3>
+                </div>
+                <div class="state-info">
+                    <h3>زامفارة</h3>
+                </div>
+            </a>
+        </div>
+        
+        <footer>
+            <p>جميع الحقوق محفوظة &copy; 2023 دليل ولايات نيجيريا</p>
+            <p>للاستفسارات: info@nigeriastates.com | هاتف: +234 123 456 789</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // عناصر DOM
+        const searchInput = document.getElementById('search-input');
+        const stateCards = document.querySelectorAll('.state-card');
+
+        // وظيفة تصفية الولايات
+        function filterStates() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            stateCards.forEach(card => {
+                const stateName = card.getAttribute('data-state').toLowerCase();
+                if (stateName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // حدث البحث أثناء الكتابة
+        searchInput.addEventListener('input', filterStates);
+    </script>
+</body>
+</html>
