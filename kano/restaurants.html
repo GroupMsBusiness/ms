@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل مطاعم كانو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* تنسيقات عامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* الهيدر */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        header h1 {
+            color: #e74c3c;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        header i {
+            margin-left: 10px;
+        }
+        
+        /* فلترة المطاعم */
+        .filters {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 2;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        #search-input, select {
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        select {
+            padding-left: 15px;
+        }
+        
+        /* قائمة المطاعم */
+        .restaurants-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .restaurant-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .restaurant-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .restaurant-info {
+            padding: 20px;
+        }
+        
+        .restaurant-info h3 {
+            color: #e74c3c;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .restaurant-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .rating {
+            background-color: #f39c12;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .rating i {
+            margin-left: 5px;
+        }
+        
+        .cuisine-type {
+            background-color: #9b59b6;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            color: #555;
+        }
+        
+        .location i {
+            margin-left: 5px;
+            color: #3498db;
+        }
+        
+        .restaurant-info p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .view-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .view-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .view-btn i {
+            margin-left: 5px;
+        }
+        
+        /* تنسيقات للهواتف */
+        @media (max-width: 768px) {
+            .restaurants-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-utensils"></i>دليل مطاعم كانو</h1>
+            <p>اكتشف أفضل المطاعم في مدينة كانو، نيجيريا</p>
+        </header>
+        
+        <div class="filters">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="ابحث عن مطعم...">
+            </div>
+            <select id="cuisine-filter">
+                <option value="">كل أنواع المطابخ</option>
+                <option value="عربي">عربي</option>
+                <option value="نيجيري">نيجيري</option>
+                <option value="وجبات سريعة">وجبات سريعة</option>
+                <option value="صيني">صيني</option>
+                <option value="غربي">غربي</option>
+            </select>
+            <select id="area-filter">
+                <option value="">كل المناطق</option>
+                <option value="نصراوا">نصراوا</option>
+                <option value="فاغي">فاغي</option>
+                <option value="دالا">دالا</option>
+                <option value="غوال">غوال</option>
+                <option value="بلدية كانو">بلدية كانو</option>
+            </select>
+        </div>
+        
+        <div class="restaurants-list">
+            <!-- مطعم 1 -->
+            <div class="restaurant-card">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="مطعم زاريا" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>مطعم زاريا</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.5</span>
+                        <span class="cuisine-type">عربي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>نصراوا</span>
+                    </div>
+                    <p>شارع إبراهيم تاكو، نصراوا</p>
+                    <p>يقدم أشهى المأكولات العربية والشعبية النيجيرية في جو عائلي مميز. يتميز المطعم بوجباته الشهية وخدمته الممتازة.</p>
+                    <a href="#" class="view-btn">عرض الموقع <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            
+            <!-- مطعم 2 -->
+            <div class="restaurant-card">
+                <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Chicken Republic" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Chicken Republic</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.2</span>
+                        <span class="cuisine-type">وجبات سريعة</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>فاغي</span>
+                    </div>
+                    <p>شارع كانو-زاريا، فاغي</p>
+                    <p>سلسلة مطاعم شهيرة للوجبات السريعة والدجاج المقلي. يقدم وجبات سريعة ولذيذة بأسعار مناسبة.</p>
+                    <a href="#" class="view-btn">عرض الموقع <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            
+            <!-- مطعم 3 -->
+            <div class="restaurant-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="مطعم الرفاعي" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>مطعم الرفاعي</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.7</span>
+                        <span class="cuisine-type">عربي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>دالا</span>
+                    </div>
+                    <p>شارع مرغوب، دالا</p>
+                    <p>مطعم لبناني يقدم المأكولات الشرقية الأصيلة. يشتهر بالشواء والمشويات والوجبات اللبنانية التقليدية.</p>
+                    <a href="#" class="view-btn">عرض الموقع <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            
+            <!-- مطعم 4 -->
+            <div class="restaurant-card">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Kilimanjaro Restaurant" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Kilimanjaro Restaurant</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.3</span>
+                        <span class="cuisine-type">نيجيري</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>بلدية كانو</span>
+                    </div>
+                    <p>شارع نيجر، بلدية كانو</p>
+                    <p>يقدم الأطباق النيجيرية التقليدية في جو عصري. مكان مميز لتجربة الأطعمة المحلية الأصيلة.</p>
+                    <a href="#" class="view-btn">عرض الموقع <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            
+            <!-- مطعم 5 -->
+            <div class="restaurant-card">
+                <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="مطعم البشير" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>مطعم البشير</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.8</span>
+                        <span class="cuisine-type">عربي</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>غوال</span>
+                    </div>
+                    <p>شارع إيليا، غوال</p>
+                    <p>أشهر المطاعم العربية في كانو. يتميز بديكوره العربي الأصيل ووجباته الشهية التي تناسب العائلات.</p>
+                    <a href="#" class="view-btn">عرض الموقع <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            
+            <!-- مطعم 6 -->
+            <div class="restaurant-card">
+                <img src="https://images.unsplash.com/photo-1562967914-608f82629710?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Tasty Fried Chicken" class="restaurant-image">
+                <div class="restaurant-info">
+                    <h3>Tasty Fried Chicken</h3>
+                    <div class="restaurant-meta">
+                        <span class="rating"><i class="fas fa-star"></i>4.0</span>
+                        <span class="cuisine-type">وجبات سريعة</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i>نصراوا</span>
+                    </div>
+                    <p>شارع زونغو، نصراوا</p>
+                    <p>متخصص في الدجاج المقلي والوجبات الخفيفة. يقدم وجبات سريعة التحضير بنكهات مميزة.</p>
+                    <a href="#" class="view-btn">عرض الموقع <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
